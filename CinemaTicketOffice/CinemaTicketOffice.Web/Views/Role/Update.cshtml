@@ -1,0 +1,84 @@
+﻿@using CinemaTicketOffice.Domain.Models.Identity
+@model CinemaTicketOffice.Domain.Models.Identity.RoleEdit
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container flex-grow-1 d-flex flex-column">
+    <div class="row flex-grow-1 justify-content-center align-items-center">
+        <div class="col-12 col-lg-8 col-xxl-6">
+            <h1>Manage Users</h1>
+            <form method="post">
+                <input type="hidden" name="roleName" value="@Model.Role.Name" />
+                <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Add users to role @Model.Role.Name
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.NonMembers.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="2">All users have role <strong>@Model.Role.Name</strong></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (TicketOfficeUser user in Model.NonMembers)
+                            {
+                                <tr>
+                                    <td>@user.UserName</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" class="form-check-input" name="AddIds" value="@user.Id">
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Remove users from role @Model.Role.Name
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Members.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="2">No users have role <strong>@Model.Role.Name</strong></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (TicketOfficeUser user in Model.Members)
+                            {
+                                <tr>
+                                    <td>@user.UserName</td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="DeleteIds" value="@user.Id">
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

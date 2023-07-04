@@ -18,4 +18,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CinemaTicketOffice.Domain\CinemaTicketOffice.Domain.csproj" />
+    <ProjectReference Include="..\CinemaTicketOffice.Repository\CinemaTicketOffice.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
