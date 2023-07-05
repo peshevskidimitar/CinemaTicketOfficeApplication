@@ -1,0 +1,45 @@
+﻿@using CinemaTicketOffice.Domain.Models.Identity;
+@using System.Web
+@model List<TicketOfficeUser>
+
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col">
+            <form method="POST" asp-action="ImportUsers" enctype="multipart/form-data">
+                <div class="input-group">
+                    <span class="input-group-text">Import Users</span>
+                    <input type="file" name="file" class="form-control">
+                    <button class="btn btn-outline-primary" type="submit">Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mb-3 justify-content-center">
+        <div class="col">
+            <h1>Users</h1>
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th valign="middle" scope="col">#</th>
+                        <th valign="middle" scope="col">Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        TicketOfficeUser user = Model[i];
+                        <tr>
+                            <td valign="middle" scope="col">@(i + 1)</td>
+                            <td valign="middle" scope="col">@user.Email</td>
+                            <td class="text-center">
+                                <a class="btn btn-warning" asp-controller="Role" asp-action="Index">Manage Roles</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

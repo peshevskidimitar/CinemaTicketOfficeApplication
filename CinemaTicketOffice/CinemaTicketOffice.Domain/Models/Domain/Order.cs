@@ -13,5 +13,14 @@ namespace CinemaTicketOffice.Domain.Models.Domain
         public TicketOfficeUser User { get; set; }
 
         public virtual ICollection<TicketInOrder> TicketInOrderCollection { get; set; }
+
+        public double TotalPrice()
+        {
+            double totalPrice = 0;
+            foreach (var item in TicketInOrderCollection)
+                totalPrice += item.Ticket.Price * item.Quantity;
+
+            return totalPrice;
+        }
     }
 }

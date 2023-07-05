@@ -1,0 +1,65 @@
+﻿@using CinemaTicketOffice.Domain.Models.Domain;
+@model List<Order>
+
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-12">
+            <h1>Orders</h1>
+        </div>
+        <div class="col-12">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var order = Model[i];
+
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th valign="middle" colspan="4">Order #@(i + 1)</th>
+                            <th valign="middle" class="text-end"><a class="btn btn-sm btn-outline-primary" asp-action="CreateInvoice" asp-route-id="@order.Id">Create Invoice</a></th>
+                        </tr>
+                        <tr>
+                            <th valign="middle" scope="col">#</th>
+                            <th valign="middle" scope="col">Ticket</th>
+                            <th valign="middle" scope="col">Price</th>
+                            <th valign="middle" scope="col">Quantity</th>
+                            <th valign="middle" scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (order.TicketInOrderCollection.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center"><strong>Looks like your shopping cart is empty!</strong></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @for (int j = 0; j < order.TicketInOrderCollection.Count; j++)
+                            {
+                                var item = order.TicketInOrderCollection.ElementAt(j);
+
+                                <tr>
+                                    <th valign="middle" scope="row">@(j + 1)</th>
+                                    <td valign="middle">@item.Ticket.MovieName</td>
+                                    <td valign="middle">$@item.Ticket.Price</td>
+                                    <td valign="middle">@item.Quantity</td>
+                                    <td valign="middle">$@((item.Ticket.Price * item.Quantity).ToString())</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th valign="middle" scope="col">Total</th>
+                            <th valign="middle" scope="col">$@order.TotalPrice()</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+        </div>
+    </div>
+</div>

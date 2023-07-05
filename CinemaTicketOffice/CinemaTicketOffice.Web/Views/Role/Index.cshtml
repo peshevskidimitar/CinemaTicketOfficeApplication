@@ -22,7 +22,9 @@
                         <tr>
                             <td>@role.Id</td>
                             <td>@role.Name</td>
-                            <td><a class="btn btn-warning" asp-action="Update" asp-controller="Role" asp-route-id="@role.Id">Manage Users</a></td>
+                            <td class="text-center">
+                                <a class="btn btn-warning" asp-action="Update" asp-controller="Role" asp-route-id="@role.Id">Add or Remove Users</a>
+                                </td>
                         </tr>
                     }
                 </tbody>

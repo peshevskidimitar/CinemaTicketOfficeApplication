@@ -30,10 +30,27 @@
             </form>
         </div>
     </div>
+    @if (User.IsInRole("Administrator"))
+    {
+        <div class="row mb-3">
+            <div class="col">
+                <form asp-action="ExportTickets">
+                    <div class="input-group">
+                        <span for="genre" class="input-group-text">Filter by Genre</span>
+                        <input id="genre" name="genre" type="text" class="form-control" />
+                        <button type="submit" class="btn btn-outline-primary">Export</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
     <div class="row mb-3">
         <div class="col d-flex justify-content-between align-items-center">
             <h1>Tickets</h1>
-            <div><a class="btn btn-primary" asp-action="Create">Create New</a></div>
+            @if (User.IsInRole("Administrator"))
+            {
+                <div><a class="btn btn-primary" asp-action="Create">Create New</a></div>
+            }
         </div>
     </div>
     <div class="row row-cols-4 g-5">
@@ -50,8 +67,11 @@
                         <p class="card-text">Price: $@item.Price</p>
                         <div class="d-flex justify-content-between mb-3">
                             <a class="btn btn-sm btn-primary flex-grow-1 mx-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-sm btn-warning flex-grow-1 mx-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-sm btn-danger flex-grow-1 mx-1" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a class="btn btn-sm btn-warning flex-grow-1 mx-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-sm btn-danger flex-grow-1 mx-1" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            }
                         </div>
                         <div>
                             <a class="btn btn-sm btn-success w-100" asp-controller="Tickets" asp-action="AddTicketToCart" asp-route-id="@item.Id">Add to Cart</a>

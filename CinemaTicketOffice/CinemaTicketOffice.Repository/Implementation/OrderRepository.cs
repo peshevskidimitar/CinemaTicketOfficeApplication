@@ -32,7 +32,7 @@ namespace CinemaTicketOffice.Repository.Implementation
             return _context.Set<Order>()
                .Include(order => order.User)
                .Include(order => order.TicketInOrderCollection)
-               .Include("TicketInOrderCollection.Product")
+               .Include("TicketInOrderCollection.Ticket")
                .SingleOrDefaultAsync(z => z.Id == model.Id)
                .Result;
         }

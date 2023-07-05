@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+    <PackageReference Include="ExcelDataReader" Version="3.1.0" />
+    <PackageReference Include="GemBox.Document" Version="33.0.1187" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
@@ -24,6 +27,11 @@
     <ProjectReference Include="..\CinemaTicketOffice.Domain\CinemaTicketOffice.Domain.csproj" />
     <ProjectReference Include="..\CinemaTicketOffice.Repository\CinemaTicketOffice.Repository.csproj" />
     <ProjectReference Include="..\CinemaTicketOffice.Service\CinemaTicketOffice.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\" />
+    <Folder Include="Templates\" />
   </ItemGroup>
 
 </Project>

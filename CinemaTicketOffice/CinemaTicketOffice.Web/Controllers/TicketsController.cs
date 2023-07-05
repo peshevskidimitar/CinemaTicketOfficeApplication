@@ -13,6 +13,8 @@ using CinemaTicketOffice.Domain.DTO.Domain;
 using System.Security.Claims;
 using CinemaTicketOffice.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace CinemaTicketOffice.Web.Controllers
 {
@@ -166,13 +168,11 @@ namespace CinemaTicketOffice.Web.Controllers
             return _context.TicketSet.Any(e => e.Id == id);
         }
 
-        [Authorize]
         public IActionResult AddTicketToCart(Guid id)
         {
             return View(_ticketService.GetShoppingCartInfo(id));
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddTicketToCart(AddToShoppingCartDTO model)
@@ -183,6 +183,54 @@ namespace CinemaTicketOffice.Web.Controllers
                 return RedirectToAction("Index", "Tickets");
            
             return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public FileContentResult ExportTickets(string genre)
+        {
+            List<Ticket> tickets = _ticketService.GetAllTickets();
+            if (!string.IsNullOrEmpty(genre))
+                tickets = tickets
+                    .Where(ticket => ticket.MovieGenre == genre)
+                    .ToList();
+
+            string fileName = "Tickets.xlsx";
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            using (var workBook = new XLWorkbook())
+            {
+                IXLWorksheet worksheet = workBook.Worksheets.Add("Tickets");
+
+                worksheet.Cell(1, 1).Value = "Ticket Id";
+                worksheet.Cell(1, 2).Value = "Movie Name";
+                worksheet.Cell(1, 3).Value = "Movie Genre";
+                worksheet.Cell(1, 4).Value = "Movie Cover Image";
+                worksheet.Cell(1, 5).Value = "Movie Description";
+                worksheet.Cell(1, 6).Value = "Time";
+                worksheet.Cell(1, 7).Value = "Price";
+
+                for (int i = 1; i <= tickets.Count(); i++)
+                {
+                    var ticket = tickets[i - 1];
+
+                    worksheet.Cell(i + 1, 1).Value = ticket.Id.ToString();
+                    worksheet.Cell(i + 1, 2).Value = ticket.MovieName.ToString();
+                    worksheet.Cell(i + 1, 3).Value = ticket.MovieGenre.ToString();
+                    worksheet.Cell(i + 1, 4).Value = ticket.MovieCoverImage.ToString();
+                    worksheet.Cell(i + 1, 5).Value = ticket.MovieDescription.ToString();
+                    worksheet.Cell(i + 1, 6).Value = ticket.Time.ToString();
+                    worksheet.Cell(i + 1, 7).Value = "$" + ticket.Price.ToString();
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workBook.SaveAs(stream);
+
+                    var content = stream.ToArray();
+
+                    return File(content, contentType, fileName);
+                }
+            }
         }
     }
 }
