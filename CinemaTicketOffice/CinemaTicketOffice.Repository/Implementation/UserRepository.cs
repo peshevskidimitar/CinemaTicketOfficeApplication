@@ -14,6 +14,11 @@ namespace CinemaTicketOffice.Repository.Implementation
     {
         private readonly ApplicationDbContext _context;
 
+        public UserRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<TicketOfficeUser> GetAll()
         {
             return _context.Set<TicketOfficeUser>()
@@ -23,6 +28,9 @@ namespace CinemaTicketOffice.Repository.Implementation
         public TicketOfficeUser GetById(string id)
         {
             return _context.Set<TicketOfficeUser>()
+                .Include("ShoppingCart")
+                .Include("ShoppingCart.TicketInShoppingCartCollection")
+                .Include("ShoppingCart.TicketInShoppingCartCollection.Ticket")
                 .SingleOrDefault(user => user.Id == id);
         }
 

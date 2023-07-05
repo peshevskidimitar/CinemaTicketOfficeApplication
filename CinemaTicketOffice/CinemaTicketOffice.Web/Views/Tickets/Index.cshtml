@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CinemaTicketOffice.Domain.Models.Domain.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container my-3">
+    <div class="row mb-3">
+        <div class="col">
+            <form asp-action="Index">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="datetime-local" name="startTime" id="start-time" class="form-control" />
+                            <label for="start-time">Start Time</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="datetime-local" name="endTime" id="start-time" class="form-control" />
+                            <label for="end-time">End Time</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3 d-flex justify-content-end">
+                            <input type="submit" value="Filter" class="btn btn-primary w-25" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col d-flex justify-content-between align-items-center">
+            <h1>Tickets</h1>
+            <div><a class="btn btn-primary" asp-action="Create">Create New</a></div>
+        </div>
+    </div>
+    <div class="row row-cols-4 g-5">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@item.MovieCoverImage" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Ticket for @item.MovieName</h5>
+                        <h6 class="card-subtitle mb-1">@item.MovieGenre</h6>
+                        <p class="card-text">@item.MovieDescription</p>
+                        <p class="card-text">Time: @item.Time</p>
+                        <p class="card-text">Price: $@item.Price</p>
+                        <div class="d-flex justify-content-between mb-3">
+                            <a class="btn btn-sm btn-primary flex-grow-1 mx-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-sm btn-warning flex-grow-1 mx-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-sm btn-danger flex-grow-1 mx-1" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-sm btn-success w-100" asp-controller="Tickets" asp-action="AddTicketToCart" asp-route-id="@item.Id">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -46,7 +46,8 @@ namespace CinemaTicketOffice.Web.Controllers
                     NormalizedUserName = request.Email,
                     Email = request.Email,
                     NormalizedEmail = request.Email,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    ShoppingCart = new Domain.Models.Domain.ShoppingCart()
                 };
 
                 IdentityResult result = await _userManager.CreateAsync(user, request.Password);

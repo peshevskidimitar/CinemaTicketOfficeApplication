@@ -1,0 +1,73 @@
+﻿@model CinemaTicketOffice.Domain.Models.Domain.Ticket
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container flex-grow-1 d-flex flex-column">
+    <div class="row flex-grow-1 justify-content-center align-items-center">
+        <div class="col-12 col-lg-8 col-xxl-6">
+            <h1>Edit</h1>
+            <form asp-action="Edit">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="MovieName" class="form-control" placeholder="Movie Name" />
+                            <label asp-for="MovieName"></label>
+                            <span asp-validation-for="MovieName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="MovieGenre" class="form-control" placeholder="Movie Genre" />
+                            <label asp-for="MovieGenre"></label>
+                            <span asp-validation-for="MovieGenre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="MovieCoverImage" class="form-control" placeholder="Movie Cover Image" />
+                            <label asp-for="MovieCoverImage"></label>
+                            <span asp-validation-for="MovieCoverImage" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="MovieDescription" class="form-control" placeholder="Movie Description" />
+                            <label asp-for="MovieDescription"></label>
+                            <span asp-validation-for="MovieDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Time" class="form-control" placeholder="Time" />
+                            <label asp-for="Time"></label>
+                            <span asp-validation-for="Time" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Price" class="form-control" placeholder="Price" />
+                            <label asp-for="Price"></label>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <input type="hidden" asp-for="Id" />
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
