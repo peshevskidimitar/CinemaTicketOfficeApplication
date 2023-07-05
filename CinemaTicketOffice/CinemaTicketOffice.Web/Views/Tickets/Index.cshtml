@@ -58,19 +58,28 @@
         {
             <div class="col">
                 <div class="card h-100">
-                    <img src="@item.MovieCoverImage" class="card-img-top" alt="...">
+                    <img src="@item.MovieCoverImage" class="img-fluid card-img-top" alt="..." style="max-height: 23rem;">
                     <div class="card-body">
                         <h5 class="card-title">Ticket for @item.MovieName</h5>
                         <h6 class="card-subtitle mb-1">@item.MovieGenre</h6>
-                        <p class="card-text">@item.MovieDescription</p>
+                        <p class="card-text">
+                            @if (item.MovieDescription.Length > 100)
+                            {
+                                <span>@item.MovieDescription.Substring(0, 100)...</span>
+                            }
+                            else
+                            {
+                                <span>@item.MovieDescription</span>
+                            }
+                        </p>
                         <p class="card-text">Time: @item.Time</p>
                         <p class="card-text">Price: $@item.Price</p>
                         <div class="d-flex justify-content-between mb-3">
-                            <a class="btn btn-sm btn-primary flex-grow-1 mx-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-sm btn-primary flex-grow-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
                             @if (User.IsInRole("Administrator"))
                             {
-                                <a class="btn btn-sm btn-warning flex-grow-1 mx-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                <a class="btn btn-sm btn-danger flex-grow-1 mx-1" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                <a class="btn btn-sm btn-warning flex-grow-1 ms-2 me-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-sm btn-danger flex-grow-1 ms-1" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             }
                         </div>
                         <div>

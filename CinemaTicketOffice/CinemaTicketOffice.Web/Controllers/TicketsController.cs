@@ -60,6 +60,7 @@ namespace CinemaTicketOffice.Web.Controllers
             return View(ticket);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Tickets/Create
         public IActionResult Create()
         {
@@ -69,6 +70,7 @@ namespace CinemaTicketOffice.Web.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MovieName,MovieGenre,MovieCoverImage,MovieDescription,Time,Price,Id")] Ticket ticket)
@@ -84,6 +86,7 @@ namespace CinemaTicketOffice.Web.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -102,6 +105,7 @@ namespace CinemaTicketOffice.Web.Controllers
         // POST: Tickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("MovieName,MovieGenre,MovieCoverImage,MovieDescription,Time,Price,Id")] Ticket ticket)
@@ -135,6 +139,7 @@ namespace CinemaTicketOffice.Web.Controllers
         }
 
         // GET: Tickets/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -153,6 +158,7 @@ namespace CinemaTicketOffice.Web.Controllers
         }
 
         // POST: Tickets/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
